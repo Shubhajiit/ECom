@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer'
 import "dotenv/config"
 
 
-export const verifyEmail =(token , email)=>{
+export const sendOTPMail = async(otp , email)=>{
 
 
     const mailTransporter =
@@ -20,12 +20,9 @@ export const verifyEmail =(token , email)=>{
     const mailDetails = {
     from: 'process.env.MAIL_USER',
     to: email,
-    subject: 'Email Verification',
-    text: `Hi there , we are recently visited our website , 
-    Please follow the given link to verify the email
-    http://localhost:5173/verify/${token}
-    Thanks
-    `
+    subject: 'Password reset OTP',
+    
+    html:`<p>Your OTP for Password reset is ${otp}</p>`
     };
 
     mailTransporter
@@ -34,7 +31,7 @@ export const verifyEmail =(token , email)=>{
             if (err) {
                 console.log('Error Occurs');
             } else {
-                console.log('Email sent successfully');
+                console.log('OTP sent successfully');
             }
         });
 }
